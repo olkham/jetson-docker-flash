@@ -1,0 +1,23 @@
+name: jetson-docker-flash
+services:
+  flasher:
+    build:
+      context: .
+      args:
+        UBUNTU_VERSION: ${UBUNTU_VERSION:-20.04}
+    image: jetson-docker-flash:ubuntu-${UBUNTU_VERSION:-20.04}
+    privileged: true
+    # l4t_initrd_flash.sh (Orin, Thor) talks to the board over a USB network interface.
+    network_mode: host
+    working_dir: /workspace
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./:/workspace
+      # Bind the host's /dev so the board stays visible when it re-enumerates mid-flash.
+      - /dev:/dev
+      - /run/udev:/run/udev:ro
+    environment:
+      DEBIAN_FRONTEND: noninteractive
+      # NVIDIA's flash.sh checks $USER rather than the uid, and Docker leaves it unset.
+      USER: root

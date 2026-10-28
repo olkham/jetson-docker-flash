@@ -1,0 +1,10 @@
+# NVIDIA downloads and extracted BSPs (large, and redistributed under NVIDIA's licence)
+downloads/*
+!downloads/.gitkeep
+work/
+Linux_for_Tegra/
+# Flash logs contain the board's unique chip ID (ECID)
+logs/
+# Local troubleshooting notes and editor settings
+summary.md
+.vscode/
